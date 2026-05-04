@@ -1,460 +1,228 @@
 #!/usr/bin/env python3
 """
-badge_generator.py — Glitch Badge Generator
-============================================
-Generates all 133 animated glitch badges derived programmatically from the
-badge-glitch.svg DNA.  Three usage modes:
+badge_generator.py — VRIL LABS animated glitch badge factory
+Derived from badge-glitch.svg. Generates GitHub README-compatible SVGs.
 
-  python badge_generator.py all    --out ./profile/assets/badges
-  python badge_generator.py repo   --out ./assets
-  python badge_generator.py custom "POST QUANTUM" --accent "#a78bfa" --tag "Security" --width 260
+Usage:
+  python badge_generator.py                    # regenerates all 3 collections
+  python badge_generator.py custom "MY LABEL" --accent "#ff6b6b" --tag "Status"
 """
 
-from __future__ import annotations
+import os, sys, argparse
 
-import argparse
-import os
-import re
-import sys
-from pathlib import Path
-from typing import NamedTuple
+# ── VRIL LABS brand tokens ────────────────────────────────────────────────────
+DARK_BG     = "#0b0c0b"
+DARK_BORDER = "#1a2a24"
+DARK_ACCENT = "#1fe8a8"
+DARK_MUTED  = "#4a7060"
+GLITCH_RED  = "#ff3366"
+GLITCH_CYAN = "#33ffee"
+SCAN_COLOR  = "rgba(31,232,168,0.025)"
 
-# ---------------------------------------------------------------------------
-# Badge specification types
-# ---------------------------------------------------------------------------
+def make_badge(txt, accent=DARK_ACCENT, w=220, h=36,
+               tag=None, tag_color=None, dur=5):
+    tc  = tag_color or DARK_MUTED
+    fs  = max(9, min(15, int(w * 0.056)))
+    esc = txt.replace("'", "\\'")
 
-class BadgeSpec(NamedTuple):
-    tag:    str          # left-side label  (e.g. "TWITTER")
-    value:  str          # right-side value  (e.g. "FOLLOW")
-    accent: str          # hex accent colour (e.g. "#1da1f2")
-    slug:   str          # filename stem     (e.g. "twitter")
-    widths: list[int]    # sizes to render   (e.g. [200, 280])
+    tag_css  = (f".tag{{background:{tc}18;border-right:1px solid {tc}40;"
+                f"padding:0 10px;font-size:{max(8,fs-2)}px;letter-spacing:0.15em;"
+                f"text-transform:uppercase;color:{tc};height:100%;"
+                f"display:flex;align-items:center;flex-shrink:0;white-space:nowrap;}}"
+                if tag else "")
+    tag_html  = f'<div class="tag">{tag}</div>' if tag else ""
+    jc        = "" if tag else "justify-content:center;"
+
+    return f"""<svg xmlns="http://www.w3.org/2000/svg" width="{w}" height="{h}" viewBox="0 0 {w} {h}">
+<foreignObject width="100%" height="100%">
+<div xmlns="http://www.w3.org/1999/xhtml">
+<style>
+*{{margin:0;padding:0;box-sizing:border-box}}
+.badge{{width:{w}px;height:{h}px;background:{DARK_BG};border:1px solid {DARK_BORDER};
+  border-radius:4px;display:flex;align-items:center;{jc}
+  position:relative;overflow:hidden;
+  font-family:ui-monospace,'SF Mono','Fira Mono',Consolas,monospace;}}
+.badge::before{{content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,{accent},transparent);}}{tag_css}
+.inner{{display:flex;align-items:center;{"flex:1;justify-content:center;" if tag else ""}padding:0 12px;height:100%;}}
+.lbl{{font-size:{fs}px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;
+  color:{accent};position:relative;user-select:none;white-space:nowrap;}}
+.lbl::before,.lbl::after{{content:'{esc}';position:absolute;top:0;left:0;width:100%;height:100%;opacity:0;}}
+.lbl::before{{color:{GLITCH_RED};mix-blend-mode:screen;}}
+.lbl::after{{color:{GLITCH_CYAN};mix-blend-mode:screen;}}
+.lbl{{animation:gm {dur}s steps(1) infinite;}}
+.lbl::before{{animation:gr {dur}s steps(1) infinite;}}
+.lbl::after{{animation:gc {dur}s steps(1) infinite;}}
+@keyframes gm{{0%,89%,100%{{transform:none;opacity:1}}
+  90%{{transform:skewX(-1deg) translateX(2px);opacity:.9}}91%{{transform:none;opacity:1}}
+  93%{{transform:skewX(.5deg) translateX(-1px);opacity:.95}}94%{{transform:none;opacity:1}}
+  96%{{transform:skewX(-.5deg) translateX(1px);opacity:.9}}97%{{transform:none;opacity:1}}}}
+@keyframes gr{{0%,89%,100%{{transform:translateX(0);opacity:0}}
+  90%{{transform:translateX(-3px);opacity:.7}}91%{{opacity:0}}
+  93%{{transform:translateX(2px);opacity:.5}}94%{{opacity:0}}
+  96%{{transform:translateX(-2px);opacity:.6}}97%{{opacity:0}}}}
+@keyframes gc{{0%,89%,100%{{transform:translateX(0);opacity:0}}
+  90%{{transform:translateX(3px);opacity:.6}}91%{{opacity:0}}
+  93%{{transform:translateX(-2px);opacity:.5}}94%{{opacity:0}}
+  96%{{transform:translateX(2px);opacity:.55}}97%{{opacity:0}}}}
+.scan{{position:absolute;inset:0;pointer-events:none;
+  background:repeating-linear-gradient(0deg,transparent,transparent 3px,{SCAN_COLOR} 3px,{SCAN_COLOR} 4px);
+  animation:fl {dur}s steps(1) infinite;}}
+@keyframes fl{{0%,89%,100%{{opacity:1}}90%{{opacity:.55}}91%{{opacity:1}}93%{{opacity:.7}}94%{{opacity:1}}}}
+.br{{position:absolute;width:7px;height:7px;border-color:{accent};border-style:solid;opacity:.35;}}
+.br-tl{{top:4px;left:4px;border-width:1px 0 0 1px;}}.br-tr{{top:4px;right:4px;border-width:1px 1px 0 0;}}
+.br-bl{{bottom:4px;left:4px;border-width:0 0 1px 1px;}}.br-br{{bottom:4px;right:4px;border-width:0 1px 1px 0;}}
+</style>
+<div class="badge">
+  <div class="scan"></div>
+  <div class="br br-tl"></div><div class="br br-tr"></div>
+  <div class="br br-bl"></div><div class="br br-br"></div>
+  {tag_html}<div class="inner"><div class="lbl">{txt}</div></div>
+</div></div></foreignObject></svg>"""
 
 
-# ---------------------------------------------------------------------------
-# Collections
-# ---------------------------------------------------------------------------
-
-SOCIAL_BADGES: list[BadgeSpec] = [
-    BadgeSpec("TWITTER",   "FOLLOW",    "#1da1f2", "twitter",   [200, 280]),
-    BadgeSpec("INSTAGRAM", "FOLLOW",    "#e1306c", "instagram", [200, 280]),
-    BadgeSpec("YOUTUBE",   "SUBSCRIBE", "#ff0000", "youtube",   [200, 280]),
-    BadgeSpec("LINKEDIN",  "CONNECT",   "#0a66c2", "linkedin",  [200, 280]),
-    BadgeSpec("GITHUB",    "FOLLOW",    "#f0f6fc", "github",    [200, 280]),
-    BadgeSpec("TIKTOK",    "FOLLOW",    "#fe2c55", "tiktok",    [200, 280]),
-    BadgeSpec("FACEBOOK",  "LIKE",      "#1877f2", "facebook",  [200, 280]),
-    BadgeSpec("REDDIT",    "JOIN",      "#ff4500", "reddit",    [200, 280]),
-    BadgeSpec("TWITCH",    "FOLLOW",    "#9146ff", "twitch",    [200, 280]),
-    BadgeSpec("PINTEREST", "FOLLOW",    "#e60023", "pinterest", [200, 280]),
-    BadgeSpec("MASTODON",  "FOLLOW",    "#6364ff", "mastodon",  [200, 280]),
-    BadgeSpec("BLUESKY",   "FOLLOW",    "#0085ff", "bluesky",   [200, 280]),
-]
-
-COMMS_BADGES: list[BadgeSpec] = [
-    BadgeSpec("DISCORD",   "JOIN",      "#5865f2", "discord",   [220, 310]),
-    BadgeSpec("TELEGRAM",  "CHAT",      "#2aabee", "telegram",  [220, 310]),
-    BadgeSpec("MATRIX",    "JOIN",      "#0dbd8b", "matrix",    [220, 310]),
-    BadgeSpec("SLACK",     "WORKSPACE", "#4a154b", "slack",     [220, 310]),
-    BadgeSpec("SIGNAL",    "MESSAGE",   "#2592e9", "signal",    [220, 310]),
-    BadgeSpec("WHATSAPP",  "CHAT",      "#25d366", "whatsapp",  [220, 310]),
-    BadgeSpec("EMAIL",     "CONTACT",   "#ea4335", "email",     [220, 310]),
-    BadgeSpec("PHONE",     "CALL",      "#34a853", "phone",     [220, 310]),
-    BadgeSpec("RSS",       "SUBSCRIBE", "#f26522", "rss",       [220, 310]),
-    BadgeSpec("IRC",       "CONNECT",   "#00aeef", "irc",       [220, 310]),
-    BadgeSpec("XMPP",      "CHAT",      "#0a6096", "xmpp",      [220, 310]),
-    BadgeSpec("KEYBASE",   "VERIFY",    "#ff6f21", "keybase",   [220, 310]),
-    BadgeSpec("WIRE",      "MESSAGE",   "#00b0ff", "wire",      [220, 310]),
-    BadgeSpec("ELEMENT",   "JOIN",      "#0dbd8b", "element",   [220, 310]),
-]
-
-REPO_BADGES: list[BadgeSpec] = [
-    # Status
-    BadgeSpec("STATUS", "ACTIVE",       "#39ff14", "status-active",       [220, 290]),
-    BadgeSpec("STATUS", "MAINTENANCE",  "#f0c040", "status-maintenance",  [220, 290]),
-    BadgeSpec("STATUS", "DEPRECATED",   "#ff4444", "status-deprecated",   [220, 290]),
-    BadgeSpec("STATUS", "WIP",          "#ff9900", "status-wip",          [220, 290]),
-    BadgeSpec("STATUS", "STABLE",       "#39ff14", "status-stable",       [220, 290]),
-    BadgeSpec("STATUS", "BETA",         "#f0c040", "status-beta",         [220, 290]),
-    # License
-    BadgeSpec("LICENSE", "MIT",         "#a0c040", "license-mit",         [220, 290]),
-    BadgeSpec("LICENSE", "GPL-3",       "#cc4444", "license-gpl",         [220, 290]),
-    BadgeSpec("LICENSE", "APACHE-2",    "#d07020", "license-apache",      [220, 290]),
-    BadgeSpec("LICENSE", "BSD-3",       "#4080c0", "license-bsd",         [220, 290]),
-    BadgeSpec("LICENSE", "CC0",         "#888888", "license-cc0",         [220, 290]),
-    BadgeSpec("LICENSE", "PROPRIETARY", "#ff4444", "license-proprietary", [220, 290]),
-    # Build
-    BadgeSpec("BUILD",  "PASSING",      "#39ff14", "build-passing",       [220, 290]),
-    BadgeSpec("BUILD",  "FAILING",      "#ff4444", "build-failing",       [220, 290]),
-    BadgeSpec("BUILD",  "UNKNOWN",      "#888888", "build-unknown",       [220, 290]),
-    # Security
-    BadgeSpec("SECURITY", "POST-QUANTUM", "#a78bfa", "security-pq",       [220, 290]),
-    BadgeSpec("SECURITY", "E2E-ENC",      "#34d399", "security-e2e",      [220, 290]),
-    BadgeSpec("SECURITY", "HARDENED",     "#f59e0b", "security-hardened", [220, 290]),
-    BadgeSpec("SECURITY", "AUDITED",      "#60a5fa", "security-audited",  [220, 290]),
-    # Contrib
-    BadgeSpec("CONTRIB", "PRs WELCOME",  "#39ff14", "contrib-prs",        [220, 290]),
-    BadgeSpec("CONTRIB", "CONTRIBUTORS", "#60a5fa", "contrib-all",        [220, 290]),
-    BadgeSpec("CONTRIB", "HELP WANTED",  "#ff6b6b", "contrib-help",       [220, 290]),
-    # Version
-    BadgeSpec("VERSION", "LATEST",       "#39ff14", "version-latest",     [220, 290]),
-    BadgeSpec("VERSION", "SEMVER",       "#60a5fa", "version-semver",     [220, 290]),
-    BadgeSpec("VERSION", "SNAPSHOT",     "#f0c040", "version-snapshot",   [220, 290]),
-    # Language
-    BadgeSpec("LANG", "PYTHON",         "#3572a5", "lang-python",         [220, 290]),
-    BadgeSpec("LANG", "JAVASCRIPT",     "#f1e05a", "lang-js",             [220, 290]),
-    BadgeSpec("LANG", "GO",             "#00add8", "lang-go",             [220, 290]),
-    BadgeSpec("LANG", "RUST",           "#dea584", "lang-rust",           [220, 290]),
-    BadgeSpec("LANG", "TYPESCRIPT",     "#2b7489", "lang-ts",             [220, 290]),
-    # Platform
-    BadgeSpec("PLATFORM", "LINUX",      "#fcc624", "platform-linux",      [220, 290]),
-    BadgeSpec("PLATFORM", "MACOS",      "#999999", "platform-macos",      [220, 290]),
-    BadgeSpec("PLATFORM", "WINDOWS",    "#0078d4", "platform-windows",    [220, 290]),
-    BadgeSpec("PLATFORM", "DOCKER",     "#2496ed", "platform-docker",     [220, 290]),
-    BadgeSpec("PLATFORM", "CLOUD",      "#00adef", "platform-cloud",      [220, 290]),
-]
-
-COLLECTIONS: dict[str, list[BadgeSpec]] = {
-    "social": SOCIAL_BADGES,
-    "comms":  COMMS_BADGES,
-    "repo":   REPO_BADGES,
+# ── Batch definitions (edit to add/remove badges) ─────────────────────────────
+PA = {
+    "twitter":"#1DA1F2","x":"#e7e7e7","instagram":"#E1306C",
+    "linkedin":"#0A66C2","youtube":"#FF0000","tiktok":"#69C9D0",
+    "mastodon":"#6364FF","bluesky":"#0085ff",
+    "discord":"#5865F2","github":"#c8ccca","telegram":"#26A5E4",
+    "slack":"#E01E5A","matrix":"#0DBD8B","signal":"#3A76F0",
+    "whatsapp":"#25D366","keybase":"#FF6F21",
 }
 
+SOCIAL = [
+    ("twitter","Twitter","Follow",PA["twitter"]),
+    ("x","X","Follow",PA["x"]),
+    ("instagram","Instagram","Follow",PA["instagram"]),
+    ("linkedin","LinkedIn","Connect",PA["linkedin"]),
+    ("youtube","YouTube","Subscribe",PA["youtube"]),
+    ("tiktok","TikTok","Follow",PA["tiktok"]),
+    ("mastodon","Mastodon","Follow",PA["mastodon"]),
+    ("bluesky","Bluesky","Follow",PA["bluesky"]),
+    ("share",None,"Share",DARK_ACCENT),
+    ("star",None,"Star",DARK_ACCENT),
+    ("sponsor",None,"Sponsor","#ff6b8b"),
+    ("newsletter",None,"Newsletter",DARK_ACCENT),
+]
 
-# ---------------------------------------------------------------------------
-# SVG generation
-# ---------------------------------------------------------------------------
+COMMS = [
+    ("discord","Discord","Join Server",PA["discord"]),
+    ("github","GitHub","Star Repo",PA["github"]),
+    ("telegram","Telegram","Join Channel",PA["telegram"]),
+    ("slack","Slack","Join Workspace",PA["slack"]),
+    ("matrix","Matrix","Join Room",PA["matrix"]),
+    ("signal","Signal","Message Us",PA["signal"]),
+    ("whatsapp","WhatsApp","Chat",PA["whatsapp"]),
+    ("keybase","Keybase","Encrypted Chat",PA["keybase"]),
+    ("chat",None,"Open Chat",DARK_ACCENT),
+    ("forum",None,"Discuss",DARK_ACCENT),
+    ("docs",None,"Docs",DARK_ACCENT),
+    ("support",None,"Support","#ffd166"),
+    ("email",None,"Email Us",DARK_ACCENT),
+    ("secure_channel",None,"Secure Channel",DARK_ACCENT),
+]
 
-def _slug_id(text: str) -> str:
-    """Produce a safe XML id fragment from arbitrary text."""
-    return re.sub(r"[^a-z0-9]", "-", text.lower())
-
-
-def make_badge(
-    tag:    str,
-    value:  str,
-    accent: str,
-    width:  int = 220,
-    height: int = 34,
-) -> str:
-    """Return a standalone animated glitch badge SVG string."""
-
-    w  = width
-    h  = height
-    # Left (tag) side width — proportional to tag string length, min 35 %
-    raw_split = max(int(w * 0.36), len(tag) * 8 + 20)
-    split     = min(raw_split, w - 60)          # ensure value area ≥ 60 px
-    tag_cx    = split // 2
-    val_cx    = split + (w - split) // 2
-
-    uid = _slug_id(f"{tag}-{value}-{width}")    # unique per badge×size
-
-    # 7-frame chromatic-aberration keyframe tables (steps(1) timing)
-    # red  shifts LEFT,  cyan shifts RIGHT across 7 frames + rest
-    red_x_tag  = ";".join([
-        str(tag_cx - 2), str(tag_cx), str(tag_cx + 2),
-        str(tag_cx - 1), str(tag_cx + 1), str(tag_cx - 2),
-        str(tag_cx), str(tag_cx),
-    ])
-    cyn_x_tag  = ";".join([
-        str(tag_cx + 2), str(tag_cx), str(tag_cx - 2),
-        str(tag_cx + 1), str(tag_cx - 1), str(tag_cx + 2),
-        str(tag_cx), str(tag_cx),
-    ])
-    red_x_val  = ";".join([
-        str(val_cx - 2), str(val_cx), str(val_cx + 2),
-        str(val_cx - 1), str(val_cx + 1), str(val_cx - 2),
-        str(val_cx), str(val_cx),
-    ])
-    cyn_x_val  = ";".join([
-        str(val_cx + 2), str(val_cx), str(val_cx - 2),
-        str(val_cx + 1), str(val_cx - 1), str(val_cx + 2),
-        str(val_cx), str(val_cx),
-    ])
-    ca_op      = "0.45;0.10;0.45;0.40;0.20;0.45;0;0.45"
-    flick_op   = "0;0;0;0;0;0.08;0;0"
-    dur        = "3.7s"
-
-    svg = f"""\
-<svg xmlns="http://www.w3.org/2000/svg"
-     width="{w}" height="{h}"
-     role="img" aria-label="{tag}: {value}">
-  <title>{tag}: {value}</title>
-  <defs>
-    <!-- CRT phosphor scanline grid (4 px repeat) -->
-    <pattern id="sl-{uid}" x="0" y="0" width="{w}" height="4"
-             patternUnits="userSpaceOnUse">
-      <rect width="{w}" height="2" fill="#000" opacity="0.14"/>
-    </pattern>
-    <!-- Top-edge gradient pulse accent seam -->
-    <linearGradient id="tg-{uid}" x1="0" y1="0" x2="1" y2="0"
-                    gradientUnits="objectBoundingBox">
-      <stop offset="0"   stop-color="{accent}" stop-opacity="0"/>
-      <stop offset="0.5" stop-color="{accent}" stop-opacity="1"/>
-      <stop offset="1"   stop-color="{accent}" stop-opacity="0"/>
-      <animateTransform attributeName="gradientTransform" type="translate"
-        values="-0.4 0;0.4 0;-0.4 0" dur="4s" repeatCount="indefinite"/>
-    </linearGradient>
-    <clipPath id="cb-{uid}">
-      <rect width="{w}" height="{h}"/>
-    </clipPath>
-  </defs>
-
-  <g clip-path="url(#cb-{uid})">
-    <!-- ── Void background ── -->
-    <rect width="{w}" height="{h}" fill="#0b0c0b"/>
-    <!-- Subtle tag-side tint -->
-    <rect width="{split}" height="{h}" fill="#0e120e"/>
-
-    <!-- ── Border ── -->
-    <rect width="{w - 2}" height="{h - 2}" x="1" y="1"
-          fill="none" stroke="#1a2a24" stroke-width="1"/>
-
-    <!-- ── Top-edge gradient pulse ── -->
-    <rect width="{w}" height="1" fill="url(#tg-{uid})"/>
-
-    <!-- ── Divider seam ── -->
-    <rect x="{split}" y="0" width="1" height="{h}"
-          fill="{accent}" opacity="0.30"/>
-
-    <!-- ── Corner bracket decorators (border-width trick via path) ── -->
-    <path d="M4,4 L4,10 M4,4 L10,4"
-          stroke="#1a2a24" stroke-width="1" fill="none"/>
-    <path d="M{w - 4},4 L{w - 4},10 M{w - 4},4 L{w - 10},4"
-          stroke="#1a2a24" stroke-width="1" fill="none"/>
-    <path d="M4,{h - 4} L4,{h - 10} M4,{h - 4} L10,{h - 4}"
-          stroke="#1a2a24" stroke-width="1" fill="none"/>
-    <path d="M{w - 4},{h - 4} L{w - 4},{h - 10} M{w - 4},{h - 4} L{w - 10},{h - 4}"
-          stroke="#1a2a24" stroke-width="1" fill="none"/>
-
-    <!-- ═══════════════════════════════════════════════════════════
-         TAG text — chromatic aberration glitch (7-frame steps(1))
-         Red channel shifts LEFT, Cyan channel shifts RIGHT
-    ═══════════════════════════════════════════════════════════════ -->
-    <!-- red channel -->
-    <text font-family="'Courier New',Courier,monospace"
-          font-size="11" font-weight="700" letter-spacing="0.5"
-          fill="#ff3030" text-anchor="middle" x="{tag_cx}" y="22">
-      <animate attributeName="x"
-               values="{red_x_tag}" dur="{dur}"
-               repeatCount="indefinite" calcMode="discrete"/>
-      <animate attributeName="fill-opacity"
-               values="{ca_op}" dur="{dur}"
-               repeatCount="indefinite" calcMode="discrete"/>
-      {tag.upper()}
-    </text>
-    <!-- cyan channel -->
-    <text font-family="'Courier New',Courier,monospace"
-          font-size="11" font-weight="700" letter-spacing="0.5"
-          fill="#00e5ff" text-anchor="middle" x="{tag_cx}" y="22">
-      <animate attributeName="x"
-               values="{cyn_x_tag}" dur="{dur}"
-               repeatCount="indefinite" calcMode="discrete"/>
-      <animate attributeName="fill-opacity"
-               values="{ca_op}" dur="{dur}"
-               repeatCount="indefinite" calcMode="discrete"/>
-      {tag.upper()}
-    </text>
-    <!-- primary layer -->
-    <text font-family="'Courier New',Courier,monospace"
-          font-size="11" font-weight="700" letter-spacing="0.5"
-          fill="#b8d4b8" text-anchor="middle" x="{tag_cx}" y="22">
-      <animate attributeName="x"
-               values="{tag_cx};{tag_cx};{tag_cx};{tag_cx};{tag_cx - 1};{tag_cx};{tag_cx};{tag_cx}"
-               dur="{dur}" repeatCount="indefinite" calcMode="discrete"/>
-      {tag.upper()}
-    </text>
-
-    <!-- ═══════════════════════════════════════════════════════════
-         VALUE text — same glitch pattern, accent colour primary
-    ═══════════════════════════════════════════════════════════════ -->
-    <!-- red channel -->
-    <text font-family="'Courier New',Courier,monospace"
-          font-size="11" font-weight="700" letter-spacing="0.5"
-          fill="#ff3030" text-anchor="middle" x="{val_cx}" y="22">
-      <animate attributeName="x"
-               values="{red_x_val}" dur="{dur}"
-               repeatCount="indefinite" calcMode="discrete"/>
-      <animate attributeName="fill-opacity"
-               values="{ca_op}" dur="{dur}"
-               repeatCount="indefinite" calcMode="discrete"/>
-      {value.upper()}
-    </text>
-    <!-- cyan channel -->
-    <text font-family="'Courier New',Courier,monospace"
-          font-size="11" font-weight="700" letter-spacing="0.5"
-          fill="#00e5ff" text-anchor="middle" x="{val_cx}" y="22">
-      <animate attributeName="x"
-               values="{cyn_x_val}" dur="{dur}"
-               repeatCount="indefinite" calcMode="discrete"/>
-      <animate attributeName="fill-opacity"
-               values="{ca_op}" dur="{dur}"
-               repeatCount="indefinite" calcMode="discrete"/>
-      {value.upper()}
-    </text>
-    <!-- primary layer (accent colour) -->
-    <text font-family="'Courier New',Courier,monospace"
-          font-size="11" font-weight="700" letter-spacing="0.5"
-          fill="{accent}" text-anchor="middle" x="{val_cx}" y="22">
-      <animate attributeName="x"
-               values="{val_cx};{val_cx};{val_cx};{val_cx};{val_cx - 1};{val_cx};{val_cx};{val_cx}"
-               dur="{dur}" repeatCount="indefinite" calcMode="discrete"/>
-      <animate attributeName="fill-opacity"
-               values="1;0.70;1;0.90;1;0.80;1;1"
-               dur="{dur}" repeatCount="indefinite" calcMode="discrete"/>
-      {value.upper()}
-    </text>
-
-    <!-- ── CRT scanline overlay ── -->
-    <rect width="{w}" height="{h}" fill="url(#sl-{uid})"/>
-
-    <!-- ── Synchronized screen-flicker pulse ── -->
-    <rect width="{w}" height="{h}" fill="#0b0c0b">
-      <animate attributeName="opacity"
-               values="{flick_op}" dur="{dur}"
-               repeatCount="indefinite" calcMode="discrete"/>
-    </rect>
-  </g>
-</svg>
-"""
-    return svg
+REPO = [
+    ("status-stable","Status","Stable","#1fe8a8"),
+    ("status-experimental","Status","Experimental","#ff9f1c"),
+    ("status-deprecated","Status","Deprecated","#888888"),
+    ("status-archived","Status","Archived","#aaaaaa"),
+    ("status-wip","Status","In Progress","#ffd166"),
+    ("status-maintained","Status","Maintained","#1fe8a8"),
+    ("license-mit","License","MIT","#1fe8a8"),
+    ("license-apache2","License","Apache 2.0","#1fe8a8"),
+    ("license-gpl3","License","GPL 3.0","#1fe8a8"),
+    ("license-proprietary","License","Proprietary","#ff6b6b"),
+    ("license-bsl","License","BSL 1.1","#a78bfa"),
+    ("build-passing","Build","Passing","#1fe8a8"),
+    ("build-failing","Build","Failing","#ff6b6b"),
+    ("build-pending","Build","Pending","#ffd166"),
+    ("security-pq","Security","Post-Quantum","#1fe8a8"),
+    ("security-encrypted","Security","E2E Encrypted","#1fe8a8"),
+    ("security-audited","Security","Audited","#1fe8a8"),
+    ("security-cve-free","Security","CVE Free","#1fe8a8"),
+    ("contrib-welcome","Contrib","PRs Welcome","#a78bfa"),
+    ("contrib-seeking","Contrib","Seeking Contribs","#a78bfa"),
+    ("contrib-closed","Contrib","Closed","#888888"),
+    ("version-alpha","Version","Alpha","#ff9f1c"),
+    ("version-beta","Version","Beta","#ffd166"),
+    ("version-stable","Version","Stable","#1fe8a8"),
+    ("version-rc","Version","Release Candidate","#69C9D0"),
+    ("lang-python","Lang","Python","#3776AB"),
+    ("lang-go","Lang","Go","#00ADD8"),
+    ("lang-rust","Lang","Rust","#CE422B"),
+    ("lang-nodejs","Lang","Node.js","#539E43"),
+    ("lang-c","Lang","C / C++","#6295CB"),
+    ("platform-linux","Platform","Linux","#1fe8a8"),
+    ("platform-wasm","Platform","WebAssembly","#654FF0"),
+    ("platform-fpga","Platform","FPGA / ASIC","#1fe8a8"),
+]
 
 
-# ---------------------------------------------------------------------------
-# File I/O helpers
-# ---------------------------------------------------------------------------
-
-def write_badge(path: Path, svg: str) -> None:
-    path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(svg, encoding="utf-8")
-    print(f"  wrote  {path}")
-
-
-def generate_collection(
-    specs:   list[BadgeSpec],
-    out_dir: Path,
-    subdir:  str,
-) -> int:
-    """Generate both size variants for every spec in *specs*.
-
-    Returns the number of SVG files written.
-    """
-    count = 0
-    for spec in specs:
-        for w in spec.widths:
-            suffix = "-sm" if w == min(spec.widths) else "-lg"
-            fname  = f"{spec.slug}{suffix}.svg"
-            svg    = make_badge(spec.tag, spec.value, spec.accent, width=w)
-            write_badge(out_dir / subdir / fname, svg)
-            count += 1
-    return count
+def run_batch(name, definitions, out_dir, sizes):
+    os.makedirs(out_dir, exist_ok=True)
+    n = 0
+    for entry in definitions:
+        stem, tag, txt, accent = entry
+        for sfx, w, h in sizes:
+            svg = make_badge(txt, accent=accent, w=w, h=h,
+                             tag=tag, tag_color=accent,
+                             dur=5 + abs(hash(stem)) % 4)
+            path = os.path.join(out_dir, f"{stem}{sfx}.svg")
+            with open(path, "w") as f:
+                f.write(svg)
+            n += 1
+    print(f"  {name}: {n} badges → {out_dir}")
+    return n
 
 
-# ---------------------------------------------------------------------------
-# Catalog SVG
-# ---------------------------------------------------------------------------
+def main():
+    parser = argparse.ArgumentParser(description="VRIL LABS badge generator")
+    parser.add_argument("mode", nargs="?", default="all",
+                        help='all | social | comms | repo | custom')
+    parser.add_argument("label", nargs="?", help="Label text (custom mode)")
+    parser.add_argument("--accent", default=DARK_ACCENT)
+    parser.add_argument("--tag", default=None)
+    parser.add_argument("--tag-color", default=None)
+    parser.add_argument("--width", type=int, default=220)
+    parser.add_argument("--height", type=int, default=34)
+    parser.add_argument("--dur", type=int, default=5)
+    parser.add_argument("--out", default=".")
+    args = parser.parse_args()
 
-def make_catalog(
-    all_specs: dict[str, list[BadgeSpec]],
-    out_dir:   Path,
-) -> None:
-    """Write a single catalog SVG that lists every badge slug and accent."""
-    rows: list[str] = []
-    y = 30
-    for collection, specs in all_specs.items():
-        rows.append(
-            f'  <text x="10" y="{y}" font-family="monospace" font-size="11"'
-            f' fill="#1a2a24" font-weight="700">{collection.upper()}</text>'
-        )
-        y += 16
-        for spec in specs:
-            rows.append(
-                f'  <text x="20" y="{y}" font-family="monospace" font-size="10"'
-                f' fill="{spec.accent}">{spec.slug}  {spec.tag}:{spec.value}</text>'
-            )
-            y += 14
+    base = args.out
 
-    total_h = y + 20
-    header = (
-        f'<svg xmlns="http://www.w3.org/2000/svg" width="420" height="{total_h}">\n'
-        f'  <rect width="420" height="{total_h}" fill="#0b0c0b"/>\n'
-        f'  <text x="10" y="16" font-family="monospace" font-size="12"'
-        f' fill="#39ff14" font-weight="700">GLITCH BADGE CATALOG</text>\n'
-    )
-    footer = "</svg>\n"
-    catalog_svg = header + "\n".join(rows) + "\n" + footer
-    write_badge(out_dir / "catalog.svg", catalog_svg)
+    if args.mode == "custom":
+        if not args.label:
+            print("ERROR: provide a label text for custom mode"); sys.exit(1)
+        svg = make_badge(args.label, accent=args.accent,
+                         w=args.width, h=args.height,
+                         tag=args.tag, tag_color=args.tag_color,
+                         dur=args.dur)
+        fname = args.label.lower().replace(" ", "-") + ".svg"
+        path = os.path.join(args.out, fname)
+        with open(path, "w") as f:
+            f.write(svg)
+        print(f"Custom badge → {path}")
+        return
 
+    batches = {
+        "social": (SOCIAL, os.path.join(base, "social"),
+                   [("", 200, 34), ("-wide", 280, 38)]),
+        "comms":  (COMMS,  os.path.join(base, "comms"),
+                   [("", 220, 34), ("-wide", 310, 38)]),
+        "repo":   (REPO,   os.path.join(base, "repo"),
+                   [("", 220, 34), ("-wide", 290, 38)]),
+    }
 
-# ---------------------------------------------------------------------------
-# CLI
-# ---------------------------------------------------------------------------
-
-def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
-    p = argparse.ArgumentParser(
-        description=__doc__,
-        formatter_class=argparse.RawDescriptionHelpFormatter,
-    )
-    sub = p.add_subparsers(dest="command", required=True)
-
-    # ── all ──────────────────────────────────────────────────────────────────
-    all_p = sub.add_parser("all", help="Regenerate every badge across all collections")
-    all_p.add_argument("--out", default=".", metavar="DIR",
-                       help="Root output directory (default: .)")
-
-    # ── per-collection ───────────────────────────────────────────────────────
-    for name in COLLECTIONS:
-        cp = sub.add_parser(name, help=f"Generate the '{name}' collection only")
-        cp.add_argument("--out", default=".", metavar="DIR")
-
-    # ── custom ───────────────────────────────────────────────────────────────
-    cust = sub.add_parser("custom", help="One-off custom badge (any label, any accent)")
-    cust.add_argument("value",          metavar="VALUE",
-                      help='Right-side value text, e.g. "POST QUANTUM"')
-    cust.add_argument("--tag",    default="BADGE", metavar="TAG",
-                      help="Left-side tag text (default: BADGE)")
-    cust.add_argument("--accent", default="#39ff14", metavar="HEX",
-                      help="Accent colour (default: #39ff14)")
-    cust.add_argument("--width",  type=int, default=220, metavar="PX",
-                      help="Badge width in px (default: 220)")
-    cust.add_argument("--out",    default=".", metavar="DIR")
-    cust.add_argument("--name",   default=None, metavar="SLUG",
-                      help="Output filename stem (default: derived from VALUE)")
-
-    return p.parse_args(argv)
-
-
-def main(argv: list[str] | None = None) -> int:
-    args    = parse_args(argv)
-    out_dir = Path(args.out).expanduser()
-    total   = 0
-
-    if args.command == "all":
-        print(f"Generating all badges → {out_dir}")
-        for collection, specs in COLLECTIONS.items():
-            n = generate_collection(specs, out_dir, collection)
-            total += n
-            print(f"  {collection}: {n} SVGs")
-        make_catalog(COLLECTIONS, out_dir)
-        total += 1
-        print(f"\n✓  {total} files written to {out_dir}")
-
-    elif args.command in COLLECTIONS:
-        specs = COLLECTIONS[args.command]
-        print(f"Generating '{args.command}' collection → {out_dir}")
-        n = generate_collection(specs, out_dir, args.command)
-        print(f"\n✓  {n} SVGs written to {out_dir}/{args.command}")
-
-    elif args.command == "custom":
-        slug   = args.name or re.sub(r"[^a-z0-9]+", "-", args.value.lower()).strip("-")
-        fname  = f"{slug}.svg"
-        svg    = make_badge(args.tag, args.value, args.accent, width=args.width)
-        out_dir.mkdir(parents=True, exist_ok=True)
-        dest   = out_dir / fname
-        dest.write_text(svg, encoding="utf-8")
-        print(f"✓  custom badge written to {dest}")
-
-    return 0
+    total = 0
+    selected = batches.keys() if args.mode == "all" else [args.mode]
+    for key in selected:
+        defs, out, sizes = batches[key]
+        total += run_batch(key, defs, out, sizes)
+    print(f"Done — {total} total SVGs generated.")
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    main()
