@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="420" height="952">
+  <rect width="420" height="952" fill="#0b0c0b"/>
+  <text x="10" y="16" font-family="monospace" font-size="12" fill="#39ff14" font-weight="700">GLITCH BADGE CATALOG</text>
+  <text x="10" y="30" font-family="monospace" font-size="11" fill="#1a2a24" font-weight="700">SOCIAL</text>
+  <text x="20" y="46" font-family="monospace" font-size="10" fill="#1da1f2">twitter  TWITTER:FOLLOW</text>
+  <text x="20" y="60" font-family="monospace" font-size="10" fill="#e1306c">instagram  INSTAGRAM:FOLLOW</text>
+  <text x="20" y="74" font-family="monospace" font-size="10" fill="#ff0000">youtube  YOUTUBE:SUBSCRIBE</text>
+  <text x="20" y="88" font-family="monospace" font-size="10" fill="#0a66c2">linkedin  LINKEDIN:CONNECT</text>
+  <text x="20" y="102" font-family="monospace" font-size="10" fill="#f0f6fc">github  GITHUB:FOLLOW</text>
+  <text x="20" y="116" font-family="monospace" font-size="10" fill="#fe2c55">tiktok  TIKTOK:FOLLOW</text>
+  <text x="20" y="130" font-family="monospace" font-size="10" fill="#1877f2">facebook  FACEBOOK:LIKE</text>
+  <text x="20" y="144" font-family="monospace" font-size="10" fill="#ff4500">reddit  REDDIT:JOIN</text>
+  <text x="20" y="158" font-family="monospace" font-size="10" fill="#9146ff">twitch  TWITCH:FOLLOW</text>
+  <text x="20" y="172" font-family="monospace" font-size="10" fill="#e60023">pinterest  PINTEREST:FOLLOW</text>
+  <text x="20" y="186" font-family="monospace" font-size="10" fill="#6364ff">mastodon  MASTODON:FOLLOW</text>
+  <text x="20" y="200" font-family="monospace" font-size="10" fill="#0085ff">bluesky  BLUESKY:FOLLOW</text>
+  <text x="10" y="214" font-family="monospace" font-size="11" fill="#1a2a24" font-weight="700">COMMS</text>
+  <text x="20" y="230" font-family="monospace" font-size="10" fill="#5865f2">discord  DISCORD:JOIN</text>
+  <text x="20" y="244" font-family="monospace" font-size="10" fill="#2aabee">telegram  TELEGRAM:CHAT</text>
+  <text x="20" y="258" font-family="monospace" font-size="10" fill="#0dbd8b">matrix  MATRIX:JOIN</text>
+  <text x="20" y="272" font-family="monospace" font-size="10" fill="#4a154b">slack  SLACK:WORKSPACE</text>
+  <text x="20" y="286" font-family="monospace" font-size="10" fill="#2592e9">signal  SIGNAL:MESSAGE</text>
+  <text x="20" y="300" font-family="monospace" font-size="10" fill="#25d366">whatsapp  WHATSAPP:CHAT</text>
+  <text x="20" y="314" font-family="monospace" font-size="10" fill="#ea4335">email  EMAIL:CONTACT</text>
+  <text x="20" y="328" font-family="monospace" font-size="10" fill="#34a853">phone  PHONE:CALL</text>
+  <text x="20" y="342" font-family="monospace" font-size="10" fill="#f26522">rss  RSS:SUBSCRIBE</text>
+  <text x="20" y="356" font-family="monospace" font-size="10" fill="#00aeef">irc  IRC:CONNECT</text>
+  <text x="20" y="370" font-family="monospace" font-size="10" fill="#0a6096">xmpp  XMPP:CHAT</text>
+  <text x="20" y="384" font-family="monospace" font-size="10" fill="#ff6f21">keybase  KEYBASE:VERIFY</text>
+  <text x="20" y="398" font-family="monospace" font-size="10" fill="#00b0ff">wire  WIRE:MESSAGE</text>
+  <text x="20" y="412" font-family="monospace" font-size="10" fill="#0dbd8b">element  ELEMENT:JOIN</text>
+  <text x="10" y="426" font-family="monospace" font-size="11" fill="#1a2a24" font-weight="700">REPO</text>
+  <text x="20" y="442" font-family="monospace" font-size="10" fill="#39ff14">status-active  STATUS:ACTIVE</text>
+  <text x="20" y="456" font-family="monospace" font-size="10" fill="#f0c040">status-maintenance  STATUS:MAINTENANCE</text>
+  <text x="20" y="470" font-family="monospace" font-size="10" fill="#ff4444">status-deprecated  STATUS:DEPRECATED</text>
+  <text x="20" y="484" font-family="monospace" font-size="10" fill="#ff9900">status-wip  STATUS:WIP</text>
+  <text x="20" y="498" font-family="monospace" font-size="10" fill="#39ff14">status-stable  STATUS:STABLE</text>
+  <text x="20" y="512" font-family="monospace" font-size="10" fill="#f0c040">status-beta  STATUS:BETA</text>
+  <text x="20" y="526" font-family="monospace" font-size="10" fill="#a0c040">license-mit  LICENSE:MIT</text>
+  <text x="20" y="540" font-family="monospace" font-size="10" fill="#cc4444">license-gpl  LICENSE:GPL-3</text>
+  <text x="20" y="554" font-family="monospace" font-size="10" fill="#d07020">license-apache  LICENSE:APACHE-2</text>
+  <text x="20" y="568" font-family="monospace" font-size="10" fill="#4080c0">license-bsd  LICENSE:BSD-3</text>
+  <text x="20" y="582" font-family="monospace" font-size="10" fill="#888888">license-cc0  LICENSE:CC0</text>
+  <text x="20" y="596" font-family="monospace" font-size="10" fill="#ff4444">license-proprietary  LICENSE:PROPRIETARY</text>
+  <text x="20" y="610" font-family="monospace" font-size="10" fill="#39ff14">build-passing  BUILD:PASSING</text>
+  <text x="20" y="624" font-family="monospace" font-size="10" fill="#ff4444">build-failing  BUILD:FAILING</text>
+  <text x="20" y="638" font-family="monospace" font-size="10" fill="#888888">build-unknown  BUILD:UNKNOWN</text>
+  <text x="20" y="652" font-family="monospace" font-size="10" fill="#a78bfa">security-pq  SECURITY:POST-QUANTUM</text>
+  <text x="20" y="666" font-family="monospace" font-size="10" fill="#34d399">security-e2e  SECURITY:E2E-ENC</text>
+  <text x="20" y="680" font-family="monospace" font-size="10" fill="#f59e0b">security-hardened  SECURITY:HARDENED</text>
+  <text x="20" y="694" font-family="monospace" font-size="10" fill="#60a5fa">security-audited  SECURITY:AUDITED</text>
+  <text x="20" y="708" font-family="monospace" font-size="10" fill="#39ff14">contrib-prs  CONTRIB:PRs WELCOME</text>
+  <text x="20" y="722" font-family="monospace" font-size="10" fill="#60a5fa">contrib-all  CONTRIB:CONTRIBUTORS</text>
+  <text x="20" y="736" font-family="monospace" font-size="10" fill="#ff6b6b">contrib-help  CONTRIB:HELP WANTED</text>
+  <text x="20" y="750" font-family="monospace" font-size="10" fill="#39ff14">version-latest  VERSION:LATEST</text>
+  <text x="20" y="764" font-family="monospace" font-size="10" fill="#60a5fa">version-semver  VERSION:SEMVER</text>
+  <text x="20" y="778" font-family="monospace" font-size="10" fill="#f0c040">version-snapshot  VERSION:SNAPSHOT</text>
+  <text x="20" y="792" font-family="monospace" font-size="10" fill="#3572a5">lang-python  LANG:PYTHON</text>
+  <text x="20" y="806" font-family="monospace" font-size="10" fill="#f1e05a">lang-js  LANG:JAVASCRIPT</text>
+  <text x="20" y="820" font-family="monospace" font-size="10" fill="#00add8">lang-go  LANG:GO</text>
+  <text x="20" y="834" font-family="monospace" font-size="10" fill="#dea584">lang-rust  LANG:RUST</text>
+  <text x="20" y="848" font-family="monospace" font-size="10" fill="#2b7489">lang-ts  LANG:TYPESCRIPT</text>
+  <text x="20" y="862" font-family="monospace" font-size="10" fill="#fcc624">platform-linux  PLATFORM:LINUX</text>
+  <text x="20" y="876" font-family="monospace" font-size="10" fill="#999999">platform-macos  PLATFORM:MACOS</text>
+  <text x="20" y="890" font-family="monospace" font-size="10" fill="#0078d4">platform-windows  PLATFORM:WINDOWS</text>
+  <text x="20" y="904" font-family="monospace" font-size="10" fill="#2496ed">platform-docker  PLATFORM:DOCKER</text>
+  <text x="20" y="918" font-family="monospace" font-size="10" fill="#00adef">platform-cloud  PLATFORM:CLOUD</text>
+</svg>

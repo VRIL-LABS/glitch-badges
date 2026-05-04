@@ -1,0 +1,140 @@
+<svg xmlns="http://www.w3.org/2000/svg"
+     width="310" height="34"
+     role="img" aria-label="DISCORD: JOIN">
+  <title>DISCORD: JOIN</title>
+  <defs>
+    <!-- CRT phosphor scanline grid (4 px repeat) -->
+    <pattern id="sl-discord-join-310" x="0" y="0" width="310" height="4"
+             patternUnits="userSpaceOnUse">
+      <rect width="310" height="2" fill="#000" opacity="0.14"/>
+    </pattern>
+    <!-- Top-edge gradient pulse accent seam -->
+    <linearGradient id="tg-discord-join-310" x1="0" y1="0" x2="1" y2="0"
+                    gradientUnits="objectBoundingBox">
+      <stop offset="0"   stop-color="#5865f2" stop-opacity="0"/>
+      <stop offset="0.5" stop-color="#5865f2" stop-opacity="1"/>
+      <stop offset="1"   stop-color="#5865f2" stop-opacity="0"/>
+      <animateTransform attributeName="gradientTransform" type="translate"
+        values="-0.4 0;0.4 0;-0.4 0" dur="4s" repeatCount="indefinite"/>
+    </linearGradient>
+    <clipPath id="cb-discord-join-310">
+      <rect width="310" height="34"/>
+    </clipPath>
+  </defs>
+
+  <g clip-path="url(#cb-discord-join-310)">
+    <!-- ── Void background ── -->
+    <rect width="310" height="34" fill="#0b0c0b"/>
+    <!-- Subtle tag-side tint -->
+    <rect width="111" height="34" fill="#0e120e"/>
+
+    <!-- ── Border ── -->
+    <rect width="308" height="32" x="1" y="1"
+          fill="none" stroke="#1a2a24" stroke-width="1"/>
+
+    <!-- ── Top-edge gradient pulse ── -->
+    <rect width="310" height="1" fill="url(#tg-discord-join-310)"/>
+
+    <!-- ── Divider seam ── -->
+    <rect x="111" y="0" width="1" height="34"
+          fill="#5865f2" opacity="0.30"/>
+
+    <!-- ── Corner bracket decorators (border-width trick via path) ── -->
+    <path d="M4,4 L4,10 M4,4 L10,4"
+          stroke="#1a2a24" stroke-width="1" fill="none"/>
+    <path d="M306,4 L306,10 M306,4 L300,4"
+          stroke="#1a2a24" stroke-width="1" fill="none"/>
+    <path d="M4,30 L4,24 M4,30 L10,30"
+          stroke="#1a2a24" stroke-width="1" fill="none"/>
+    <path d="M306,30 L306,24 M306,30 L300,30"
+          stroke="#1a2a24" stroke-width="1" fill="none"/>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         TAG text — chromatic aberration glitch (7-frame steps(1))
+         Red channel shifts LEFT, Cyan channel shifts RIGHT
+    ═══════════════════════════════════════════════════════════════ -->
+    <!-- red channel -->
+    <text font-family="'Courier New',Courier,monospace"
+          font-size="11" font-weight="700" letter-spacing="0.5"
+          fill="#ff3030" text-anchor="middle" x="55" y="22">
+      <animate attributeName="x"
+               values="53;55;57;54;56;53;55;55" dur="3.7s"
+               repeatCount="indefinite" calcMode="discrete"/>
+      <animate attributeName="fill-opacity"
+               values="0.45;0.10;0.45;0.40;0.20;0.45;0;0.45" dur="3.7s"
+               repeatCount="indefinite" calcMode="discrete"/>
+      DISCORD
+    </text>
+    <!-- cyan channel -->
+    <text font-family="'Courier New',Courier,monospace"
+          font-size="11" font-weight="700" letter-spacing="0.5"
+          fill="#00e5ff" text-anchor="middle" x="55" y="22">
+      <animate attributeName="x"
+               values="57;55;53;56;54;57;55;55" dur="3.7s"
+               repeatCount="indefinite" calcMode="discrete"/>
+      <animate attributeName="fill-opacity"
+               values="0.45;0.10;0.45;0.40;0.20;0.45;0;0.45" dur="3.7s"
+               repeatCount="indefinite" calcMode="discrete"/>
+      DISCORD
+    </text>
+    <!-- primary layer -->
+    <text font-family="'Courier New',Courier,monospace"
+          font-size="11" font-weight="700" letter-spacing="0.5"
+          fill="#b8d4b8" text-anchor="middle" x="55" y="22">
+      <animate attributeName="x"
+               values="55;55;55;55;54;55;55;55"
+               dur="3.7s" repeatCount="indefinite" calcMode="discrete"/>
+      DISCORD
+    </text>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         VALUE text — same glitch pattern, accent colour primary
+    ═══════════════════════════════════════════════════════════════ -->
+    <!-- red channel -->
+    <text font-family="'Courier New',Courier,monospace"
+          font-size="11" font-weight="700" letter-spacing="0.5"
+          fill="#ff3030" text-anchor="middle" x="210" y="22">
+      <animate attributeName="x"
+               values="208;210;212;209;211;208;210;210" dur="3.7s"
+               repeatCount="indefinite" calcMode="discrete"/>
+      <animate attributeName="fill-opacity"
+               values="0.45;0.10;0.45;0.40;0.20;0.45;0;0.45" dur="3.7s"
+               repeatCount="indefinite" calcMode="discrete"/>
+      JOIN
+    </text>
+    <!-- cyan channel -->
+    <text font-family="'Courier New',Courier,monospace"
+          font-size="11" font-weight="700" letter-spacing="0.5"
+          fill="#00e5ff" text-anchor="middle" x="210" y="22">
+      <animate attributeName="x"
+               values="212;210;208;211;209;212;210;210" dur="3.7s"
+               repeatCount="indefinite" calcMode="discrete"/>
+      <animate attributeName="fill-opacity"
+               values="0.45;0.10;0.45;0.40;0.20;0.45;0;0.45" dur="3.7s"
+               repeatCount="indefinite" calcMode="discrete"/>
+      JOIN
+    </text>
+    <!-- primary layer (accent colour) -->
+    <text font-family="'Courier New',Courier,monospace"
+          font-size="11" font-weight="700" letter-spacing="0.5"
+          fill="#5865f2" text-anchor="middle" x="210" y="22">
+      <animate attributeName="x"
+               values="210;210;210;210;209;210;210;210"
+               dur="3.7s" repeatCount="indefinite" calcMode="discrete"/>
+      <animate attributeName="fill-opacity"
+               values="1;0.70;1;0.90;1;0.80;1;1"
+               dur="3.7s" repeatCount="indefinite" calcMode="discrete"/>
+      JOIN
+    </text>
+
+    <!-- ── CRT scanline overlay ── -->
+    <rect width="310" height="34" fill="url(#sl-discord-join-310)"/>
+
+    <!-- ── Synchronized screen-flicker pulse ── -->
+    <rect width="310" height="34" fill="#0b0c0b">
+      <animate attributeName="opacity"
+               values="0;0;0;0;0;0.08;0;0" dur="3.7s"
+               repeatCount="indefinite" calcMode="discrete"/>
+    </rect>
+  </g>
+</svg>

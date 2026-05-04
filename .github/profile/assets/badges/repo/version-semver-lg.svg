@@ -1,0 +1,140 @@
+<svg xmlns="http://www.w3.org/2000/svg"
+     width="290" height="34"
+     role="img" aria-label="VERSION: SEMVER">
+  <title>VERSION: SEMVER</title>
+  <defs>
+    <!-- CRT phosphor scanline grid (4 px repeat) -->
+    <pattern id="sl-version-semver-290" x="0" y="0" width="290" height="4"
+             patternUnits="userSpaceOnUse">
+      <rect width="290" height="2" fill="#000" opacity="0.14"/>
+    </pattern>
+    <!-- Top-edge gradient pulse accent seam -->
+    <linearGradient id="tg-version-semver-290" x1="0" y1="0" x2="1" y2="0"
+                    gradientUnits="objectBoundingBox">
+      <stop offset="0"   stop-color="#60a5fa" stop-opacity="0"/>
+      <stop offset="0.5" stop-color="#60a5fa" stop-opacity="1"/>
+      <stop offset="1"   stop-color="#60a5fa" stop-opacity="0"/>
+      <animateTransform attributeName="gradientTransform" type="translate"
+        values="-0.4 0;0.4 0;-0.4 0" dur="4s" repeatCount="indefinite"/>
+    </linearGradient>
+    <clipPath id="cb-version-semver-290">
+      <rect width="290" height="34"/>
+    </clipPath>
+  </defs>
+
+  <g clip-path="url(#cb-version-semver-290)">
+    <!-- ── Void background ── -->
+    <rect width="290" height="34" fill="#0b0c0b"/>
+    <!-- Subtle tag-side tint -->
+    <rect width="104" height="34" fill="#0e120e"/>
+
+    <!-- ── Border ── -->
+    <rect width="288" height="32" x="1" y="1"
+          fill="none" stroke="#1a2a24" stroke-width="1"/>
+
+    <!-- ── Top-edge gradient pulse ── -->
+    <rect width="290" height="1" fill="url(#tg-version-semver-290)"/>
+
+    <!-- ── Divider seam ── -->
+    <rect x="104" y="0" width="1" height="34"
+          fill="#60a5fa" opacity="0.30"/>
+
+    <!-- ── Corner bracket decorators (border-width trick via path) ── -->
+    <path d="M4,4 L4,10 M4,4 L10,4"
+          stroke="#1a2a24" stroke-width="1" fill="none"/>
+    <path d="M286,4 L286,10 M286,4 L280,4"
+          stroke="#1a2a24" stroke-width="1" fill="none"/>
+    <path d="M4,30 L4,24 M4,30 L10,30"
+          stroke="#1a2a24" stroke-width="1" fill="none"/>
+    <path d="M286,30 L286,24 M286,30 L280,30"
+          stroke="#1a2a24" stroke-width="1" fill="none"/>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         TAG text — chromatic aberration glitch (7-frame steps(1))
+         Red channel shifts LEFT, Cyan channel shifts RIGHT
+    ═══════════════════════════════════════════════════════════════ -->
+    <!-- red channel -->
+    <text font-family="'Courier New',Courier,monospace"
+          font-size="11" font-weight="700" letter-spacing="0.5"
+          fill="#ff3030" text-anchor="middle" x="52" y="22">
+      <animate attributeName="x"
+               values="50;52;54;51;53;50;52;52" dur="3.7s"
+               repeatCount="indefinite" calcMode="discrete"/>
+      <animate attributeName="fill-opacity"
+               values="0.45;0.10;0.45;0.40;0.20;0.45;0;0.45" dur="3.7s"
+               repeatCount="indefinite" calcMode="discrete"/>
+      VERSION
+    </text>
+    <!-- cyan channel -->
+    <text font-family="'Courier New',Courier,monospace"
+          font-size="11" font-weight="700" letter-spacing="0.5"
+          fill="#00e5ff" text-anchor="middle" x="52" y="22">
+      <animate attributeName="x"
+               values="54;52;50;53;51;54;52;52" dur="3.7s"
+               repeatCount="indefinite" calcMode="discrete"/>
+      <animate attributeName="fill-opacity"
+               values="0.45;0.10;0.45;0.40;0.20;0.45;0;0.45" dur="3.7s"
+               repeatCount="indefinite" calcMode="discrete"/>
+      VERSION
+    </text>
+    <!-- primary layer -->
+    <text font-family="'Courier New',Courier,monospace"
+          font-size="11" font-weight="700" letter-spacing="0.5"
+          fill="#b8d4b8" text-anchor="middle" x="52" y="22">
+      <animate attributeName="x"
+               values="52;52;52;52;51;52;52;52"
+               dur="3.7s" repeatCount="indefinite" calcMode="discrete"/>
+      VERSION
+    </text>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         VALUE text — same glitch pattern, accent colour primary
+    ═══════════════════════════════════════════════════════════════ -->
+    <!-- red channel -->
+    <text font-family="'Courier New',Courier,monospace"
+          font-size="11" font-weight="700" letter-spacing="0.5"
+          fill="#ff3030" text-anchor="middle" x="197" y="22">
+      <animate attributeName="x"
+               values="195;197;199;196;198;195;197;197" dur="3.7s"
+               repeatCount="indefinite" calcMode="discrete"/>
+      <animate attributeName="fill-opacity"
+               values="0.45;0.10;0.45;0.40;0.20;0.45;0;0.45" dur="3.7s"
+               repeatCount="indefinite" calcMode="discrete"/>
+      SEMVER
+    </text>
+    <!-- cyan channel -->
+    <text font-family="'Courier New',Courier,monospace"
+          font-size="11" font-weight="700" letter-spacing="0.5"
+          fill="#00e5ff" text-anchor="middle" x="197" y="22">
+      <animate attributeName="x"
+               values="199;197;195;198;196;199;197;197" dur="3.7s"
+               repeatCount="indefinite" calcMode="discrete"/>
+      <animate attributeName="fill-opacity"
+               values="0.45;0.10;0.45;0.40;0.20;0.45;0;0.45" dur="3.7s"
+               repeatCount="indefinite" calcMode="discrete"/>
+      SEMVER
+    </text>
+    <!-- primary layer (accent colour) -->
+    <text font-family="'Courier New',Courier,monospace"
+          font-size="11" font-weight="700" letter-spacing="0.5"
+          fill="#60a5fa" text-anchor="middle" x="197" y="22">
+      <animate attributeName="x"
+               values="197;197;197;197;196;197;197;197"
+               dur="3.7s" repeatCount="indefinite" calcMode="discrete"/>
+      <animate attributeName="fill-opacity"
+               values="1;0.70;1;0.90;1;0.80;1;1"
+               dur="3.7s" repeatCount="indefinite" calcMode="discrete"/>
+      SEMVER
+    </text>
+
+    <!-- ── CRT scanline overlay ── -->
+    <rect width="290" height="34" fill="url(#sl-version-semver-290)"/>
+
+    <!-- ── Synchronized screen-flicker pulse ── -->
+    <rect width="290" height="34" fill="#0b0c0b">
+      <animate attributeName="opacity"
+               values="0;0;0;0;0;0.08;0;0" dur="3.7s"
+               repeatCount="indefinite" calcMode="discrete"/>
+    </rect>
+  </g>
+</svg>
