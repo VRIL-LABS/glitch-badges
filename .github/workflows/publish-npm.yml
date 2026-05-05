@@ -1,9 +1,8 @@
 name: Publish to npm
 
 on:
-  push:
-    tags:
-      - "v*"           # triggers on any v* tag (e.g. v1.0.0, v1.2.3)
+  release:
+    types: [released]  # triggers only when a non-prerelease GitHub release is published
   workflow_dispatch:   # manual trigger from GitHub UI
 
 permissions:
@@ -14,6 +13,9 @@ jobs:
   publish:
     name: Build & publish glitch-badges to npm
     runs-on: ubuntu-latest
+    environment:
+      name: npm
+      url: https://www.npmjs.com/package/glitch-badges
     steps:
       - name: Checkout
         uses: actions/checkout@v4

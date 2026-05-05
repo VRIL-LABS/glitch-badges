@@ -15,7 +15,10 @@
     "chromatic-aberration",
     "scanlines"
   ],
-  "author": "VRIL LABS",
+  "author": {
+    "name": "VRIL LABS",
+    "url": "https://github.com/VRIL-LABS"
+  },
   "license": "MIT",
   "repository": {
     "type": "git",

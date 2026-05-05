@@ -1,9 +1,8 @@
 name: Publish to crates.io
 
 on:
-  push:
-    tags:
-      - "v*"
+  release:
+    types: [released]  # triggers only when a non-prerelease GitHub release is published
   workflow_dispatch:
 
 permissions:
@@ -13,6 +12,9 @@ jobs:
   publish-crates:
     name: Build & publish glitch-badges to crates.io
     runs-on: ubuntu-latest
+    environment:
+      name: crates-io
+      url: https://crates.io/crates/glitch-badges
     steps:
       - uses: actions/checkout@v4
 
