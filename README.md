@@ -1,5 +1,5 @@
 <div align="center">
-<img src="https://raw.githubusercontent.com/dubzrn/glitch-badges/main/.github/profile/assets/header.svg" width="900" alt="glitch-badges by VRIL LABS"/>
+<img src=".github/profile/assets/header.svg" width="900" alt="glitch-badges by VRIL LABS"/>
 </div>
 
 <div align="center">
