@@ -1,6 +1,6 @@
 [package]
 name = "glitch-badges"
-version = "1.0.0"
+version = "1.0.1"
 edition = "2021"
 description = "VRIL LABS animated glitch badge generator — 133 badges, phosphor-seafoam palette, CRT scanlines"
 authors = ["VRIL LABS <https://github.com/VRIL-LABS>"]

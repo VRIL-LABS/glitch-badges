@@ -1,6 +1,6 @@
 {
   "name": "glitch-badges",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "133 animated glitch badges — VRIL LABS phosphor-seafoam palette, chromatic-aberration glitch, CRT scanlines. TypeScript/React/Node SDK.",
   "keywords": [
     "badges",

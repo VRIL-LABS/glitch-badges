@@ -6,6 +6,8 @@
 
 [![CI](https://github.com/dubzrn/glitch-badges/actions/workflows/ci.yml/badge.svg)](https://github.com/dubzrn/glitch-badges/actions/workflows/ci.yml)
 [![npm](https://img.shields.io/npm/v/glitch-badges?color=%231fe8a8&label=npm)](https://www.npmjs.com/package/glitch-badges)
+[![PyPI](https://img.shields.io/pypi/v/glitch-badges?color=%231fe8a8&label=pypi)](https://pypi.org/p/glitch-badges)
+[![Crates.io](https://img.shields.io/crates/v/glitch-badges?color=%231fe8a8&label=crates.io)](https://crates.io/crates/glitch-badges)
 [![License: MIT](https://img.shields.io/badge/license-MIT-1fe8a8.svg)](LICENSE)
 
 </div>

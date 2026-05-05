@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "glitch-badges"
-version = "1.0.0"
+version = "1.0.1"
 description = "133 animated glitch badges — VRIL LABS phosphor-seafoam palette, chromatic-aberration, CRT scanlines. Python SDK + CLI."
 readme = "README.md"
 license = "MIT"
