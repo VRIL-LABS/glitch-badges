@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="150" height="38" viewBox="0 0 150 38">
+<foreignObject width="100%" height="100%">
+<div xmlns="http://www.w3.org/1999/xhtml">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+.badge{width:150px;height:38px;background:#0b0c0b;border:1px solid #1a2a24;border-radius:4px;display:flex;align-items:center;justify-content:center;flex-direction:row;gap:6px;position:relative;overflow:hidden;font-family:ui-monospace,'SF Mono','Fira Mono',monospace;}
+.badge::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,#f87171,transparent);}
+.inner{display:flex;align-items:center;gap:6px;}
+.icon{flex-shrink:0;opacity:.85;}
+.label{font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#f87171;position:relative;user-select:none;}
+.label::before,.label::after{content:'FAILING';position:absolute;top:0;left:0;width:100%;height:100%;opacity:0;}
+.label::before{color:#ff3366;mix-blend-mode:screen;}.label::after{color:#33ffee;mix-blend-mode:screen;}
+.sublabel{font-size:9px;letter-spacing:.18em;color:#c8ccca;opacity:.45;text-transform:uppercase;line-height:1;}
+.scan{position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(31,232,168,.016) 3px,rgba(31,232,168,.016) 4px);pointer-events:none;}
+.br{position:absolute;width:6px;height:6px;border-color:#f87171;border-style:solid;opacity:.3;}
+.br-tl{top:4px;left:4px;border-width:1px 0 0 1px;}.br-tr{top:4px;right:4px;border-width:1px 1px 0 0;}
+.br-bl{bottom:4px;left:4px;border-width:0 0 1px 1px;}.br-br{bottom:4px;right:4px;border-width:0 1px 1px 0;}
+.label{animation:gm 3.0s steps(1) infinite;}
+.label::before{animation:gr 3.0s steps(1) infinite;}
+.label::after{animation:gc 3.0s steps(1) infinite;}
+.scan{animation:sf 3.0s steps(1) infinite;}
+@keyframes gm{0%,88%,100%{transform:none;opacity:1}90%{transform:skewX(-1deg) translateX(2px);opacity:.9}91%{transform:none;opacity:1}93%{transform:skewX(.5deg) translateX(-1px);opacity:.95}94%{transform:none}}
+@keyframes gr{0%,88%,100%{transform:translateX(0);opacity:0}90%{transform:translateX(-3px);opacity:.7}91%{opacity:0}93%{transform:translateX(2px);opacity:.5}94%{opacity:0}}
+@keyframes gc{0%,88%,100%{transform:translateX(0);opacity:0}90%{transform:translateX(3px);opacity:.6}91%{opacity:0}93%{transform:translateX(-2px);opacity:.5}94%{opacity:0}}
+@keyframes sf{0%,88%,100%{opacity:1}90%{opacity:.5}91%{opacity:1}}
+</style>
+<div class="badge">
+  <div class="scan"></div>
+  <div class="br br-tl"></div><div class="br br-tr"></div>
+  <div class="br br-bl"></div><div class="br br-br"></div>
+  <div class="inner">
+  <svg class="icon" viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="#f87171" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3L13 13M13 3L3 13"/></svg>
+    <span class="label">FAILING</span>
+  </div>
+</div>
+</div>
+</foreignObject>
+</svg>

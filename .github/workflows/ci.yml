@@ -1,0 +1,58 @@
+name: CI
+
+on:
+  push:
+    branches: [main, "copilot/**"]
+  pull_request:
+
+jobs:
+  test-js:
+    name: TypeScript / Node.js
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: packages/js/package-lock.json
+      - run: npm ci
+        working-directory: packages/js
+      - run: npm run build
+        working-directory: packages/js
+      - run: node dist/cli.cjs list
+        working-directory: packages/js
+
+  test-python:
+    name: Python
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Import & smoke-test
+        working-directory: packages/py
+        run: |
+          python -c "
+          from glitch_badges import make_badge, badge_url, ALL_PRESETS
+          svg = make_badge('TEST', accent='#1fe8a8', tag='Status')
+          assert '<svg' in svg
+          assert len(ALL_PRESETS) > 50
+          print('Python SDK OK —', len(ALL_PRESETS), 'presets')
+          "
+
+  test-rust:
+    name: Rust
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - run: cargo test --all-features
+        working-directory: packages/rs

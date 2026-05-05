@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="195" height="52" viewBox="0 0 195 52">
+<foreignObject width="100%" height="100%">
+<div xmlns="http://www.w3.org/1999/xhtml">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+.badge{width:195px;height:52px;background:#0b0c0b;border:1px solid #1a2a24;border-radius:4px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:2px;position:relative;overflow:hidden;font-family:ui-monospace,'SF Mono','Fira Mono',monospace;}
+.badge::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,#4f9cf9,transparent);}
+.inner{display:flex;align-items:center;gap:6px;}
+.icon{flex-shrink:0;opacity:.85;}
+.label{font-size:13px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#4f9cf9;position:relative;user-select:none;}
+.label::before,.label::after{content:'GITHUB';position:absolute;top:0;left:0;width:100%;height:100%;opacity:0;}
+.label::before{color:#ff3366;mix-blend-mode:screen;}.label::after{color:#33ffee;mix-blend-mode:screen;}
+.sublabel{font-size:9px;letter-spacing:.18em;color:#c8ccca;opacity:.45;text-transform:uppercase;line-height:1;}
+.scan{position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(31,232,168,.016) 3px,rgba(31,232,168,.016) 4px);pointer-events:none;}
+.br{position:absolute;width:6px;height:6px;border-color:#4f9cf9;border-style:solid;opacity:.3;}
+.br-tl{top:4px;left:4px;border-width:1px 0 0 1px;}.br-tr{top:4px;right:4px;border-width:1px 1px 0 0;}
+.br-bl{bottom:4px;left:4px;border-width:0 0 1px 1px;}.br-br{bottom:4px;right:4px;border-width:0 1px 1px 0;}
+.label{animation:gm 7.0s steps(1) infinite;}
+.label::before{animation:gr 7.0s steps(1) infinite;}
+.label::after{animation:gc 7.0s steps(1) infinite;}
+.scan{animation:sf 7.0s steps(1) infinite;}
+@keyframes gm{0%,88%,100%{transform:none;opacity:1}90%{transform:skewX(-1deg) translateX(2px);opacity:.9}91%{transform:none;opacity:1}93%{transform:skewX(.5deg) translateX(-1px);opacity:.95}94%{transform:none}}
+@keyframes gr{0%,88%,100%{transform:translateX(0);opacity:0}90%{transform:translateX(-3px);opacity:.7}91%{opacity:0}93%{transform:translateX(2px);opacity:.5}94%{opacity:0}}
+@keyframes gc{0%,88%,100%{transform:translateX(0);opacity:0}90%{transform:translateX(3px);opacity:.6}91%{opacity:0}93%{transform:translateX(-2px);opacity:.5}94%{opacity:0}}
+@keyframes sf{0%,88%,100%{opacity:1}90%{opacity:.5}91%{opacity:1}}
+</style>
+<div class="badge">
+  <div class="scan"></div>
+  <div class="br br-tl"></div><div class="br br-tr"></div>
+  <div class="br br-bl"></div><div class="br br-br"></div>
+  <div class="inner">
+  <svg class="icon" viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="#4f9cf9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 1A7 7 0 0 0 5.78 14.52C6.18 14.6 6.33 14.36 6.33 14.15V12.86C4.08 13.34 3.62 11.86 3.62 11.86 3.26 10.98 2.74 10.74 2.74 10.74 2.01 10.24 2.8 10.25 2.8 10.25 3.6 10.3 4.03 11.06 4.03 11.06 4.74 12.26 5.88 11.9 6.36 11.69 6.43 11.18 6.64 10.82 6.86 10.62 5.09 10.41 3.22 9.72 3.22 6.97 3.22 6.14 3.52 5.47 4.04 4.94 3.96 4.74 3.7 3.97 4.12 2.92 4.12 2.92 4.79 2.7 6.32 3.74 6.96 3.57 7.64 3.48 8.32 3.48 9 3.48 9.68 3.57 10.32 3.74 11.85 2.7 12.52 2.92 12.52 2.92 12.94 3.97 12.68 4.74 12.6 4.94 13.12 5.47 13.42 6.14 13.42 6.97 13.42 9.73 11.55 10.41 9.77 10.61 10.05 10.86 10.3 11.34 10.3 12.08V14.15C10.3 14.37 10.44 14.61 10.85 14.52A7 7 0 0 0 8 1Z"/></svg>
+    <span class="label">GITHUB</span>
+  </div>
+  <div class="sublabel">REPOSITORY</div>
+</div>
+</div>
+</foreignObject>
+</svg>

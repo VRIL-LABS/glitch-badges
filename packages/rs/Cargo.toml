@@ -1,0 +1,23 @@
+[package]
+name = "glitch-badges"
+version = "1.0.0"
+edition = "2021"
+description = "VRIL LABS animated glitch badge generator — 133 badges, phosphor-seafoam palette, CRT scanlines"
+authors = ["VRIL LABS"]
+license = "MIT"
+repository = "https://github.com/dubzrn/glitch-badges"
+homepage = "https://github.com/dubzrn/glitch-badges"
+readme = "README.md"
+keywords = ["badges", "glitch", "svg", "animated", "github"]
+categories = ["command-line-utilities", "multimedia::images", "development-tools"]
+
+[[bin]]
+name = "glitch-badges"
+path = "src/main.rs"
+
+[lib]
+name = "glitch_badges"
+path = "src/lib.rs"
+
+[dependencies]
+# zero required runtime dependencies — pure Rust

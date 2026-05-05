@@ -1,0 +1,93 @@
+{
+  "name": "glitch-badges",
+  "version": "1.0.0",
+  "description": "133 animated glitch badges — VRIL LABS phosphor-seafoam palette, chromatic-aberration glitch, CRT scanlines. TypeScript/React/Node SDK.",
+  "keywords": [
+    "badges",
+    "glitch",
+    "animated",
+    "svg",
+    "react",
+    "github",
+    "readme",
+    "vril-labs",
+    "crt",
+    "chromatic-aberration",
+    "scanlines"
+  ],
+  "author": "VRIL LABS",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dubzrn/glitch-badges.git"
+  },
+  "homepage": "https://github.com/dubzrn/glitch-badges#readme",
+  "bugs": {
+    "url": "https://github.com/dubzrn/glitch-badges/issues"
+  },
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./react": {
+      "types": "./dist/react.d.ts",
+      "import": "./dist/react.js",
+      "require": "./dist/react.cjs"
+    }
+  },
+  "bin": {
+    "glitch-badges": "./dist/cli.cjs"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "typecheck": "tsc --noEmit",
+    "test": "node --experimental-vm-modules node_modules/.bin/jest",
+    "prepublishOnly": "npm run build"
+  },
+  "peerDependencies": {
+    "react": ">=17.0.0"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@types/node": "^20.19.39",
+    "@types/react": "^18.3.28",
+    "react": "^18.3.1",
+    "tsup": "^8.5.1",
+    "typescript": "^5.9.3"
+  },
+  "tsup": {
+    "entry": {
+      "index": "src/index.ts",
+      "react": "src/react.tsx",
+      "cli": "src/cli.ts"
+    },
+    "format": [
+      "esm",
+      "cjs"
+    ],
+    "dts": true,
+    "clean": true,
+    "splitting": false,
+    "sourcemap": false,
+    "external": [
+      "react",
+      "react-dom"
+    ]
+  }
+}

@@ -1,0 +1,37 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.backends.legacy:build"
+
+[project]
+name = "glitch-badges"
+version = "1.0.0"
+description = "133 animated glitch badges — VRIL LABS phosphor-seafoam palette, chromatic-aberration, CRT scanlines. Python SDK + CLI."
+readme = "README.md"
+license = { text = "MIT" }
+authors = [{ name = "VRIL LABS" }]
+keywords = ["badges", "glitch", "animated", "svg", "github", "readme", "crt", "vril-labs"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Libraries",
+    "Topic :: Multimedia :: Graphics",
+]
+requires-python = ">=3.9"
+
+[project.urls]
+Homepage = "https://github.com/dubzrn/glitch-badges"
+Repository = "https://github.com/dubzrn/glitch-badges"
+Issues = "https://github.com/dubzrn/glitch-badges/issues"
+
+[project.scripts]
+glitch-badges = "glitch_badges.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["glitch_badges*"]
