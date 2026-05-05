@@ -7,7 +7,7 @@ authors = ["VRIL LABS <https://github.com/VRIL-LABS>"]
 license = "MIT"
 repository = "https://github.com/VRIL-LABS/glitch-badges"
 homepage = "https://github.com/VRIL-LABS/glitch-badges"
-readme = "README.md"
+readme = "../../README.md"
 keywords = ["badges", "glitch", "svg", "animated", "github"]
 categories = ["command-line-utilities", "multimedia::images", "development-tools"]
 
