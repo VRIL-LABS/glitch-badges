@@ -516,5 +516,3 @@ See [CONTRIBUTING.md](CONTRIBUTING.md).
 <strong>133 Badges · 4 Collections · Animated SVGs · 0 Dependencies · GitHub-ready</strong><br>
   <sub>Built by <strong>VRIL LABS</strong> · Encrypting the future</sub>
 </div>
-
-[MIT](LICENSE) — VRIL LABS
