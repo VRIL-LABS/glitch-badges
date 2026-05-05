@@ -28,6 +28,7 @@ requires-python = ">=3.9"
 Homepage = "https://github.com/dubzrn/glitch-badges"
 Repository = "https://github.com/dubzrn/glitch-badges"
 Issues = "https://github.com/dubzrn/glitch-badges/issues"
+Organization = "https://github.com/VRIL-LABS"
 
 [project.scripts]
 glitch-badges = "glitch_badges.cli:main"
