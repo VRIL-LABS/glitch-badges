@@ -507,4 +507,14 @@ See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## License
 
+*Copyright (c) 2026 VLABS, LLC. All rights reserved.* <br>
+*[VRIL LABS Open Source License v1.0](https://github.com/VrilLabs/vril-js/blob/main/LICENSE) — [vril.li/license](https://vril.li/license)*.
+
+---
+
+<div align="center">
+<strong>133 Badges · 4 Collections · Animated SVGs · 0 Dependencies · GitHub-ready</strong><br>
+  <sub>Built by <strong>VRIL LABS</strong> · Encrypting the future</sub>
+</div>
+
 [MIT](LICENSE) — VRIL LABS
