@@ -26,6 +26,9 @@ jobs:
       - name: Install build tools
         run: pip install build
 
+      - name: Copy README into Python package
+        run: cp README.md packages/py/README.md
+
       - name: Build sdist + wheel
         working-directory: packages/py
         run: python -m build
