@@ -1,0 +1,39 @@
+name: Create GitHub Release
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Create GitHub Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Extract changelog notes for this version
+        run: |
+          version="${GITHUB_REF_NAME#v}"
+          awk "/^## \[${version}\]/{found=1; next} found && /^## /{exit} found{print}" CHANGELOG.md \
+            | sed '/./,$!d' | sed -e :a -e '/^\n*$/{$d;N;ba}' \
+            > /tmp/release-notes.md
+          if [ ! -s /tmp/release-notes.md ]; then
+            echo "::warning::No CHANGELOG.md entry found for version ${version}. Release will have no notes."
+            echo "See [CHANGELOG.md](https://github.com/${{ github.repository }}/blob/main/CHANGELOG.md) for details." \
+              > /tmp/release-notes.md
+          fi
+          cat /tmp/release-notes.md
+
+      - name: Create GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "$GITHUB_REF_NAME" \
+            --title "glitch-badges $GITHUB_REF_NAME" \
+            --notes-file /tmp/release-notes.md \
+            --latest
